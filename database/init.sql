@@ -157,3 +157,136 @@ VALUES (1, 50.75, '2024-04-01', 15),
        (23, 66.60, '2024-04-23', 10),
        (24, 120.75, '2024-04-24', 31),
        (25, 90.49, '2024-04-25', 12);
+
+
+# Table Lieux
+# (liste aléatoire générée par chatGPT)
+DROP TABLE IF EXISTS Lieux;
+CREATE TABLE IF NOT EXISTS Lieux
+(
+    Nom_scene      varchar(100),
+    telephone      varchar(14),
+    endroit        varchar(100),
+    capacite       int,
+    vente_alcool   tinyint,
+    PRIMARY KEY (endroit)
+);
+
+INSERT INTO Lieux
+VALUES
+    ('Le Paradis Perdu', '(514) 123-4567', '123 Rue du Bonheur, Montréal', 15000, 1),
+    ('La Licorne Enchantée', '(418) 555-1234', '456 Avenue des Rêves, Québec', 2500, 1),
+    ('La Tanière des Caribous', '(514) 987-6543', '789 Boulevard de la Fantaisie, Montréal', 7000, 0),
+    ('Le Théâtre des Fous Rires', '(514) 555-7890', '101 Rue de l''Humour, Montréal', 900, 1),
+    ('La Cabane à Sucre Magique', '(819) 321-7654', '222 Chemin de l''Émerveillement, Trois-Rivières', 3000, 1),
+    ('Le Château des Frissons', '(418) 456-7890', '333 Route de l''Épouvante, Québec', 8000, 0),
+    ('Le Théâtre des Marmottes Farceuses', '(819) 654-3210', '444 Rue de la Rigolade, Sherbrooke', 1200, 1),
+    ('Le Jardin des Délices', '(514) 333-4444', '555 Avenue de la Joie, Montréal', 18000, 1),
+    ('Le Palais des Patates Frites', '(418) 222-3333', '666 Rue de la Gourmandise, Québec', 500, 1),
+    ('La Salle de Bal des Pingouins', '(418) 777-8888', '777 Boulevard du Givre, Chicoutimi', 2000, 0);
+
+# Table Artiste
+# (liste aléatoire générée par chatGPT)
+DROP TABLE IF EXISTS Artiste;
+CREATE TABLE IF NOT EXISTS Artiste
+(
+    aid            int,
+    nom            varchar(100),
+    telephone      varchar(14),
+    courriel       varchar(100),
+    popularite     int,
+    image          varchar(200),
+    PRIMARY KEY (aid),
+);
+
+INSERT INTO Artiste
+VALUES
+    (1, 'Jean Tremblay', '(514) 123-4567', 'jean.tremblay@example.com', 750, 'https://example.com/artistes/jean_tremblay.jpg'),
+    (2, 'Marie Gagnon', '(418) 555-1234', 'marie.gagnon@example.com', 820, 'https://example.com/artistes/marie_gagnon.jpg'),
+    (3, 'Pierre Dubois', '(514) 987-6543', 'pierre.dubois@example.com', 680, 'https://example.com/artistes/pierre_dubois.jpg'),
+    (4, 'Sophie Lavoie', '(514) 555-7890', 'sophie.lavoie@example.com', 900, 'https://example.com/artistes/sophie_lavoie.jpg'),
+    (5, 'Michel Bouchard', '(819) 321-7654', 'michel.bouchard@example.com', 600, 'https://example.com/artistes/michel_bouchard.jpg'),
+    (6, 'Isabelle Martin', '(418) 456-7890', 'isabelle.martin@example.com', 780, 'https://example.com/artistes/isabelle_martin.jpg'),
+    (7, 'Simon Fortin', '(819) 654-3210', 'simon.fortin@example.com', 720, 'https://example.com/artistes/simon_fortin.jpg'),
+    (8, 'Nathalie Roy', '(514) 333-4444', 'nathalie.roy@example.com', 850, 'https://example.com/artistes/nathalie_roy.jpg'),
+    (9, 'Luc Deschênes', '(418) 222-3333', 'luc.deschenes@example.com', 690, 'https://example.com/artistes/luc_deschenes.jpg'),
+    (10, 'Caroline Bergeron', '(418) 777-8888', 'caroline.bergeron@example.com', 780, 'https://example.com/artistes/caroline_bergeron.jpg'),
+    (11, 'Marc Gauthier', '(514) 111-2222', 'marc.gauthier@example.com', 720, 'https://example.com/artistes/marc_gauthier.jpg'),
+    (12, 'Catherine Leblanc', '(418) 999-8888', 'catherine.leblanc@example.com', 820, 'https://example.com/artistes/catherine_leblanc.jpg'),
+    (13, 'François Tremblay', '(418) 333-4444', 'francois.tremblay@example.com', 760, 'https://example.com/artistes/francois_tremblay.jpg'),
+    (14, 'Martine Roy', '(514) 777-6666', 'martine.roy@example.com', 900, 'https://example.com/artistes/martine_roy.jpg'),
+    (15, 'Sylvain Gagné', '(819) 888-7777', 'sylvain.gagne@example.com', 640, 'https://example.com/artistes/sylvain_gagne.jpg'),
+    (16, 'Julie Bergeron', '(514) 222-3333', 'julie.bergeron@example.com', 880, 'https://example.com/artistes/julie_bergeron.jpg'),
+    (17, 'Éric Dubé', '(418) 444-5555', 'eric.dube@example.com', 740, 'https://example.com/artistes/eric_dube.jpg'),
+    (18, 'Caroline Fortier', '(819) 666-7777', 'caroline.fortier@example.com', 700, 'https://example.com/artistes/caroline_fortier.jpg'),
+    (19, 'Patrick Tremblay', '(514) 999-8888', 'patrick.tremblay@example.com', 800, 'https://example.com/artistes/patrick_tremblay.jpg'),
+    (20, 'Geneviève Lévesque', '(418) 111-2222', 'genevieve.levesque@example.com', 730, 'https://example.com/artistes/genevieve_levesque.jpg'),
+    (21, 'Stéphane Bélanger', '(819) 555-6666', 'stephane.belanger@example.com', 890, 'https://example.com/artistes/stephane_belanger.jpg'),
+    (22, 'Annie Girard', '(514) 888-9999', 'annie.girard@example.com', 780, 'https://example.com/artistes/annie_girard.jpg'),
+    (23, 'Louis Tremblay', '(418) 777-9999', 'louis.tremblay@example.com', 690, 'https://example.com/artistes/louis_tremblay.jpg'),
+    (24, 'Sylvie Gagnon', '(819) 444-8888', 'sylvie.gagnon@example.com', 850, 'https://example.com/artistes/sylvie_gagnon.jpg'),
+    (25, 'Alexandre Dubois', '(514) 333-9999', 'alexandre.dubois@example.com', 720, 'https://example.com/artistes/alexandre_dubois.jpg'),
+    (26, 'Valérie Lachance', '(418) 666-9999', 'valerie.lachance@example.com', 920, 'https://example.com/artistes/valerie_lachance.jpg'),
+    (27, 'Martin Fortin', '(819) 777-8888', 'martin.fortin@example.com', 680, 'https://example.com/artistes/martin_fortin.jpg'),
+    (28, 'Nancy Tremblay', '(514) 555-3333', 'nancy.tremblay@example.com', 760, 'https://example.com/artistes/nancy_tremblay.jpg'),
+    (29, 'Yves Gagné', '(418) 888-7777', 'yves.gagne@example.com', 770, 'https://example.com/artistes/yves_gagne.jpg'),
+    (30, 'Isabelle Bélanger', '(819) 999-8888', 'isabelle.belanger@example.com', 840, 'https://example.com/artistes/isabelle_belanger.jpg');
+
+
+# Table PlageHoraire
+# (liste aléatoire générée par chatGPT)
+DROP TABLE IF EXISTS PlageHoraire;
+CREATE TABLE IF NOT EXISTS PlageHoraire
+(
+    phid           int,
+    date           date,
+    heureDebut     time,
+    heureFin       time,
+    PRIMARY KEY (phid)
+);
+
+INSERT INTO PlageHoraire
+VALUES
+    (1, '2025-08-01', '17:00:00', '19:00:00'),
+    (2, '2025-08-01', '20:00:00', '22:00:00'),
+    (3, '2025-08-02', '20:00:00', '23:00:00'),
+    (4, '2025-08-03', '16:00:00', '18:00:00'),
+    (5, '2025-08-03', '21:00:00', '23:00:00'),
+    (6, '2025-08-04', '16:00:00', '17:00:00'),
+    (7, '2025-08-04', '18:00:00', '22:00:00'),
+    (8, '2025-08-05', '11:00:00', '13:00:00');
+
+
+# Table Spectacle
+# (liste aléatoire générée par chatGPT)
+# Relations Performer, Réserver et Accueillir intégrées dans Spectacle (champs aid, phid et endroit)
+DROP TABLE IF EXISTS Spectacle;
+CREATE TABLE IF NOT EXISTS Spectacle
+(
+    sid            int,
+    description    varchar(500),
+    aid            int,
+    phid           int,
+    endroit        varchar(100),
+    PRIMARY KEY (sid),
+    FOREIGN KEY (aid) REFERENCES Artiste (aid),
+    FOREIGN KEY (phid) REFERENCES PlageHoraire (phid),
+    FOREIGN KEY (endroit) REFERENCES Lieux (endroit)
+);
+
+INSERT INTO Spectacle (sid, description, aid, phid, endroit) VALUES
+    (1, 'Concert de jazz envoûtant', 5, 1, '222 Chemin de l''Émerveillement, Trois-Rivières'),
+    (2, 'Spectacle de rock énergique', 8, 3, '789 Boulevard de la Fantaisie, Montréal'),
+    (3, 'Concert de musique classique', 6, 1, '333 Route de l''Épouvante, Québec'),
+    (4, 'Spectacle de folk acoustique', 14, 8, '444 Rue de la Rigolade, Sherbrooke'),
+    (5, 'Spectacle de gypsy punk dynamique', 3, 6, '123 Rue du Bonheur, Montréal'),
+    (6, 'Concert de pop entraînante', 20, 4, '555 Avenue de la Joie, Montréal'),
+    (7, 'Spectacle de country festif', 4, 7, '456 Avenue des Rêves, Québec'),
+    (8, 'Concert de blues passionnant', 2, 5, '123 Rue du Bonheur, Montréal'),
+    (9, 'Spectacle de reggae relaxant', 10, 2, '777 Boulevard du Givre, Chicoutimi'),
+    (10, 'Concert de métal explosif', 17, 4, '101 Rue de l''Humour, Montréal'),
+    (11, 'Spectacle de rap engagé', 11, 5, '333 Route de l''Épouvante, Québec'),
+    (12, 'Concert de musique électronique', 12, 2, '555 Avenue de la Joie, Montréal'),
+    (13, 'Spectacle de ska festif', 13, 8, '222 Chemin de l''Émerveillement, Trois-Rivières'),
+    (14, 'Concert de funk groovy', 29, 1, '777 Boulevard du Givre, Chicoutimi'),
+    (15, 'Spectacle de musique du monde', 25, 3, '666 Rue de la Gourmandise, Québec');
