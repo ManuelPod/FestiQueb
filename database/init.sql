@@ -252,73 +252,75 @@ CREATE TABLE IF NOT EXISTS Artistes
     nom        varchar(100) NOT NULL,
     telephone  varchar(12)  NOT NULL,
     courriel   varchar(100) NOT NULL,
-    popularite enum ('1','2','3','4','5'),
+    popularite int,
     image      varchar(200),
     CHECK ( telephone LIKE '___-___-____' ),
-    CHECK ( courriel LIKE '%@%.%' )
+    CHECK ( courriel LIKE '%@%.%' ),
+    CHECK ( popularite >= 0 AND popularite <= 10 )
 );
 
 INSERT INTO Artistes
-VALUES (DEFAULT, 'Jean Tremblay', '514-123-4567', 'jean.tremblay@example.com', 1,
+VALUES (DEFAULT, 'Jean Tremblay', '514-123-4567', 'jean.tremblay@example.com', 3,
         'https://example.com/artistes/jean_tremblay.jpg'),
-       (DEFAULT, 'Marie Gagnon', '418-555-1234', 'marie.gagnon@example.com', 3,
+       (DEFAULT, 'Marie Gagnon', '418-555-1234', 'marie.gagnon@example.com', 7,
         'https://example.com/artistes/marie_gagnon.jpg'),
        (DEFAULT, 'Pierre Dubois', '514-987-6543', 'pierre.dubois@example.com', 4,
         'https://example.com/artistes/pierre_dubois.jpg'),
-       (DEFAULT, 'Sophie Lavoie', '514-555-7890', 'sophie.lavoie@example.com', 3,
+       (DEFAULT, 'Sophie Lavoie', '514-555-7890', 'sophie.lavoie@example.com', 6,
         'https://example.com/artistes/sophie_lavoie.jpg'),
-       (DEFAULT, 'Michel Bouchard', '819-321-7654', 'michel.bouchard@example.com', 2,
+       (DEFAULT, 'Michel Bouchard', '819-321-7654', 'michel.bouchard@example.com', 9,
         'https://example.com/artistes/michel_bouchard.jpg'),
-       (DEFAULT, 'Isabelle Martin', '418-456-7890', 'isabelle.martin@example.com', 5,
+       (DEFAULT, 'Isabelle Martin', '418-456-7890', 'isabelle.martin@example.com', 2,
         'https://example.com/artistes/isabelle_martin.jpg'),
-       (DEFAULT, 'Simon Fortin', '819-654-3210', 'simon.fortin@example.com', 4,
+       (DEFAULT, 'Simon Fortin', '819-654-3210', 'simon.fortin@example.com', 8,
         'https://example.com/artistes/simon_fortin.jpg'),
        (DEFAULT, 'Nathalie Roy', '514-333-4444', 'nathalie.roy@example.com', 5,
         'https://example.com/artistes/nathalie_roy.jpg'),
-       (DEFAULT, 'Luc Deschênes', '418-222-3333', 'luc.deschenes@example.com', 3,
+       (DEFAULT, 'Luc Deschênes', '418-222-3333', 'luc.deschenes@example.com', 1,
         'https://example.com/artistes/luc_deschenes.jpg'),
-       (DEFAULT, 'Caroline Bergeron', '418-777-8888', 'caroline.bergeron@example.com', 5,
+       (DEFAULT, 'Caroline Bergeron', '418-777-8888', 'caroline.bergeron@example.com', 10,
         'https://example.com/artistes/caroline_bergeron.jpg'),
-       (DEFAULT, 'Marc Gauthier', '514-111-2222', 'marc.gauthier@example.com', 4,
+       (DEFAULT, 'Marc Gauthier', '514-111-2222', 'marc.gauthier@example.com', 3,
         'https://example.com/artistes/marc_gauthier.jpg'),
-       (DEFAULT, 'Catherine Leblanc', '418-999-8888', 'catherine.leblanc@example.com', 5,
+       (DEFAULT, 'Catherine Leblanc', '418-999-8888', 'catherine.leblanc@example.com', 6,
         'https://example.com/artistes/catherine_leblanc.jpg'),
-       (DEFAULT, 'François Tremblay', '418-333-4444', 'francois.tremblay@example.com', 4,
+       (DEFAULT, 'François Tremblay', '418-333-4444', 'francois.tremblay@example.com', 7,
         'https://example.com/artistes/francois_tremblay.jpg'),
-       (DEFAULT, 'Martine Roy', '514-777-6666', 'martine.roy@example.com', 5,
+       (DEFAULT, 'Martine Roy', '514-777-6666', 'martine.roy@example.com', 9,
         'https://example.com/artistes/martine_roy.jpg'),
        (DEFAULT, 'Sylvain Gagné', '819-888-7777', 'sylvain.gagne@example.com', 4,
         'https://example.com/artistes/sylvain_gagne.jpg'),
-       (DEFAULT, 'Julie Bergeron', '514-222-3333', 'julie.bergeron@example.com', 2,
+       (DEFAULT, 'Julie Bergeron', '514-222-3333', 'julie.bergeron@example.com', 8,
         'https://example.com/artistes/julie_bergeron.jpg'),
-       (DEFAULT, 'Éric Dubé', '418-444-5555', 'eric.dube@example.com', 4,
+       (DEFAULT, 'Éric Dubé', '418-444-5555', 'eric.dube@example.com', 5,
         'https://example.com/artistes/eric_dube.jpg'),
-       (DEFAULT, 'Caroline Fortier', '819-666-7777', 'caroline.fortier@example.com', 5,
+       (DEFAULT, 'Caroline Fortier', '819-666-7777', 'caroline.fortier@example.com', 2,
         'https://example.com/artistes/caroline_fortier.jpg'),
-       (DEFAULT, 'Patrick Tremblay', '514-999-8888', 'patrick.tremblay@example.com', 2,
+       (DEFAULT, 'Patrick Tremblay', '514-999-8888', 'patrick.tremblay@example.com', 6,
         'https://example.com/artistes/patrick_tremblay.jpg'),
-       (DEFAULT, 'Geneviève Lévesque', '418-111-2222', 'genevieve.levesque@example.com', 4,
+       (DEFAULT, 'Geneviève Lévesque', '418-111-2222', 'genevieve.levesque@example.com', 9,
         'https://example.com/artistes/genevieve_levesque.jpg'),
        (DEFAULT, 'Stéphane Bélanger', '819-555-6666', 'stephane.belanger@example.com', 3,
         'https://example.com/artistes/stephane_belanger.jpg'),
-       (DEFAULT, 'Annie Girard', '514-888-9999', 'annie.girard@example.com', 2,
+       (DEFAULT, 'Annie Girard', '514-888-9999', 'annie.girard@example.com', 8,
         'https://example.com/artistes/annie_girard.jpg'),
-       (DEFAULT, 'Louis Tremblay', '418-777-9999', 'louis.tremblay@example.com', 2,
+       (DEFAULT, 'Louis Tremblay', '418-777-9999', 'louis.tremblay@example.com', 0,
         'https://example.com/artistes/louis_tremblay.jpg'),
-       (DEFAULT, 'Sylvie Gagnon', '819-444-8888', 'sylvie.gagnon@example.com', 5,
+       (DEFAULT, 'Sylvie Gagnon', '819-444-8888', 'sylvie.gagnon@example.com', 10,
         'https://example.com/artistes/sylvie_gagnon.jpg'),
-       (DEFAULT, 'Alexandre Dubois', '514-333-9999', 'alexandre.dubois@example.com', 1,
+       (DEFAULT, 'Alexandre Dubois', '514-333-9999', 'alexandre.dubois@example.com', 7,
         'https://example.com/artistes/alexandre_dubois.jpg'),
        (DEFAULT, 'Valérie Lachance', '418-666-9999', 'valerie.lachance@example.com', 1,
         'https://example.com/artistes/valerie_lachance.jpg'),
        (DEFAULT, 'Martin Fortin', '819-777-8888', 'martin.fortin@example.com', 5,
         'https://example.com/artistes/martin_fortin.jpg'),
-       (DEFAULT, 'Nancy Tremblay', '514-555-3333', 'nancy.tremblay@example.com', 2,
+       (DEFAULT, 'Nancy Tremblay', '514-555-3333', 'nancy.tremblay@example.com', 10,
         'https://example.com/artistes/nancy_tremblay.jpg'),
-       (DEFAULT, 'Yves Gagné', '418-888-7777', 'yves.gagne@example.com', 5,
+       (DEFAULT, 'Yves Gagné', '418-888-7777', 'yves.gagne@example.com', 4,
         'https://example.com/artistes/yves_gagne.jpg'),
-       (DEFAULT, 'Isabelle Bélanger', '819-999-8888', 'isabelle.belanger@example.com', 4,
+       (DEFAULT, 'Isabelle Bélanger', '819-999-8888', 'isabelle.belanger@example.com', 6,
         'https://example.com/artistes/isabelle_belanger.jpg');
+
 
 
 # Table PlagesHoraires
@@ -376,7 +378,7 @@ VALUES (DEFAULT, '2025-08-01', '17:00:00', '19:00:00'),
        (DEFAULT, '2025-08-05', '11:00:00', '13:00:00');
 
 
-# Table Spectacle
+# Table Spectacles
 # (liste aléatoire générée par chatGPT)
 # Relations Performer, Réserver et Accueillir intégrées dans Spectacle (champs aid, phid et endroit)
 DROP TABLE IF EXISTS Spectacles;
@@ -389,22 +391,78 @@ CREATE TABLE IF NOT EXISTS Spectacles
     endroit     varchar(100) REFERENCES Lieux (endroit)
 );
 
-INSERT INTO Spectacles (sid, description, aid, phid, endroit)
-VALUES (DEFAULT, 'Concert de jazz envoûtant', 5, 1, '222 Chemin de l''Émerveillement, Trois-Rivières'),
-       (DEFAULT, 'Spectacle de rock énergique', 8, 3, '789 Boulevard de la Fantaisie, Montréal'),
-       (DEFAULT, 'Concert de musique classique', 6, 1, '333 Route de l''Épouvante, Québec'),
-       (DEFAULT, 'Spectacle de folk acoustique', 14, 8, '444 Rue de la Rigolade, Sherbrooke'),
-       (DEFAULT, 'Spectacle de gypsy punk dynamique', 3, 6, '123 Rue du Bonheur, Montréal'),
-       (DEFAULT, 'Concert de pop entraînante', 20, 4, '555 Avenue de la Joie, Montréal'),
-       (DEFAULT, 'Spectacle de country festif', 4, 7, '456 Avenue des Rêves, Québec'),
-       (DEFAULT, 'Concert de blues passionnant', 2, 5, '123 Rue du Bonheur, Montréal'),
-       (DEFAULT, 'Spectacle de reggae relaxant', 10, 2, '777 Boulevard du Givre, Chicoutimi'),
-       (DEFAULT, 'Concert de métal explosif', 17, 4, '101 Rue de l''Humour, Montréal'),
-       (DEFAULT, 'Spectacle de rap engagé', 11, 5, '333 Route de l''Épouvante, Québec'),
-       (DEFAULT, 'Concert de musique électronique', 12, 2, '555 Avenue de la Joie, Montréal'),
-       (DEFAULT, 'Spectacle de ska festif', 13, 8, '222 Chemin de l''Émerveillement, Trois-Rivières'),
-       (DEFAULT, 'Concert de funk groovy', 29, 1, '777 Boulevard du Givre, Chicoutimi'),
-       (DEFAULT, 'Spectacle de musique du monde', 25, 3, '666 Rue de la Gourmandise, Québec');
+DROP TRIGGER IF EXISTS ValiderSpectacle;
+DELIMITER //
+CREATE TRIGGER IF NOT EXISTS ValiderSpectacle
+    BEFORE INSERT
+    ON Spectacles
+    FOR EACH ROW
+BEGIN
+    IF EXISTS(SELECT aid FROM Spectacles WHERE aid = NEW.aid) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Un spectacle avec cet artiste existe déjà.';
+    ELSEIF EXISTS(SELECT phid, endroit FROM Spectacles WHERE phid = NEW.phid AND endroit = NEW.endroit) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Il y a déjà un spectacle à cet endroit et cette heure.';
+    END IF;
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS AlgorithmeAssignationSpectacles;
+DELIMITER //
+CREATE PROCEDURE IF NOT EXISTS AlgorithmeAssignationSpectacles()
+BEGIN
+    DECLARE endroit VARCHAR(100);
+    DECLARE phid VARCHAR(36);
+    DECLARE aid VARCHAR(36);
+    DECLARE lecture_complete BOOL DEFAULT FALSE;
+
+    DECLARE curseur_horaires CURSOR FOR
+        SELECT PH.phid, L.endroit
+        FROM festiqueb.PlagesHoraires PH,
+             festiqueb.Lieux L
+        ORDER BY PH.heureDebut DESC, L.capacite DESC;
+
+    DECLARE curseur_artistes CURSOR FOR SELECT A.aid FROM Artistes A ORDER BY popularite DESC;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET lecture_complete = TRUE;
+
+    OPEN curseur_horaires;
+    OPEN curseur_artistes;
+
+    boucle:
+    LOOP
+        FETCH curseur_horaires INTO phid, endroit;
+        FETCH curseur_artistes INTO aid;
+
+        IF lecture_complete THEN
+            LEAVE boucle;
+        END IF;
+
+        INSERT INTO Spectacles VALUES (DEFAULT, NULL, aid, phid, endroit);
+    END LOOP boucle;
+
+    CLOSE curseur_horaires;
+    CLOSE curseur_artistes;
+END//
+DELIMITER ;
+
+#
+# INSERT INTO Spectacles (sid, description, aid, phid, endroit)
+# VALUES (DEFAULT, 'Concert de jazz envoûtant', 5, 1, '222 Chemin de l''Émerveillement, Trois-Rivières'),
+#        (DEFAULT, 'Spectacle de rock énergique', 8, 3, '789 Boulevard de la Fantaisie, Montréal'),
+#        (DEFAULT, 'Concert de musique classique', 6, 1, '333 Route de l''Épouvante, Québec'),
+#        (DEFAULT, 'Spectacle de folk acoustique', 14, 8, '444 Rue de la Rigolade, Sherbrooke'),
+#        (DEFAULT, 'Spectacle de gypsy punk dynamique', 3, 6, '123 Rue du Bonheur, Montréal'),
+#        (DEFAULT, 'Concert de pop entraînante', 20, 4, '555 Avenue de la Joie, Montréal'),
+#        (DEFAULT, 'Spectacle de country festif', 4, 7, '456 Avenue des Rêves, Québec'),
+#        (DEFAULT, 'Concert de blues passionnant', 2, 5, '123 Rue du Bonheur, Montréal'),
+#        (DEFAULT, 'Spectacle de reggae relaxant', 10, 2, '777 Boulevard du Givre, Chicoutimi'),
+#        (DEFAULT, 'Concert de métal explosif', 17, 4, '101 Rue de l''Humour, Montréal'),
+#        (DEFAULT, 'Spectacle de rap engagé', 11, 5, '333 Route de l''Épouvante, Québec'),
+#        (DEFAULT, 'Concert de musique électronique', 12, 2, '555 Avenue de la Joie, Montréal'),
+#        (DEFAULT, 'Spectacle de ska festif', 13, 8, '222 Chemin de l''Émerveillement, Trois-Rivières'),
+#        (DEFAULT, 'Concert de funk groovy', 29, 1, '777 Boulevard du Givre, Chicoutimi'),
+#        (DEFAULT, 'Spectacle de musique du monde', 25, 3, '666 Rue de la Gourmandise, Québec');
 
 
 #Table Accès

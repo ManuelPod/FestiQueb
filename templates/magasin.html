@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FestiQueb - Magasin</title>
+    <script src="../static/app.js"></script>
+    <style>
+        .card {
+            background: lightblue;
+            height: 10rem;
+            width: 10rem;
+            border: 2px solid black;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            flex-direction: column;
+            flex-wrap: wrap;
+            margin: 1rem;
+            border-radius: 10px;
+        }
+
+        #types-billets {
+            display: flex;
+            align-items: start;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+
+<body>
+{% include menu %}
+
+<div id="types-billets">
+    {% for typeBillet in types_billets %}
+        <div class="card">
+            <p>{{ typeBillet[1] }}</p>
+            <p>${{ typeBillet[3] }}</p>
+            <button onclick="location.href = 'magasin/{{ typeBillet[0] }}'" type="button">Acheter</button>
+        </div>
+    {% endfor %}
+
+</div>
+
+<button onclick="ach" type="button">Finaliser Commande</button>
+
+</body>
+</html>
