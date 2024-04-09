@@ -1,5 +1,17 @@
-from database import connection
 from decimal import *
+from dotenv import load_dotenv
+import os
+import pymysql
+
+load_dotenv('../.env-dev')
+
+connection = pymysql.connect(
+    host=os.environ.get('BD_HOST'),
+    user=os.environ.get('BD_USER'),
+    database=os.environ.get('BD_DATABASE'),
+    passwd=os.environ.get('BD_PASSWORD'),
+    port=int(os.environ.get('BD_PORT'))
+)
 
 
 def generer_types_billets():
@@ -23,7 +35,7 @@ def generer_types_billets():
     getcontext().prec = 2
     cursor = connection.cursor()
     id = 1
-    cursor.execute('DELETE FROM festiqueb.TypesBillets WHERE True')
+    cursor.execute('DELETE FROM festiqueb.TypesBillets WHERE True;')
     for type_billet in types_billets:
         for tranche_age in tranches_ages:
             prix = int(round(tranches_ages.get(tranche_age) * type_billet.get('prix_median'), 2)) + .99
@@ -33,7 +45,18 @@ def generer_types_billets():
             id += 1
 
     connection.commit()
+    print('Types billets générés.')
+    cursor.close()
+
+
+def association_spectacles():
+    cursor = connection.cursor()
+    cursor.execute('DELETE FROM festiqueb.Spectacles WHERE True;')
+    cursor.execute(f'CALL AlgorithmeAssignationSpectacles();')
+    connection.commit()
+    print('Spectacles générés.')
     cursor.close()
 
 
 generer_types_billets()
+association_spectacles()
