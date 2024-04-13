@@ -45,7 +45,6 @@ def injecter_menu():
 
 # TODO ajouter routes pour faire gestion des spectacles (ajouter description, associer les artistes aux scène(procedure faite))
 
-# TODO
 
 @app.post('/commande')
 def creer_commande():
