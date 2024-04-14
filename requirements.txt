@@ -1,4 +1,4 @@
 flask~=2.2.2
 pymysql~=1.1.0
 python-dotenv~=0.21.0
-pymysqlpool~=1.0.9
+pymysql-pool~=0.4.6

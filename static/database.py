@@ -60,27 +60,26 @@ def selectionner_spectacles(spectacle_ids=None):
     if spectacle_ids is not None:
         placeholder = ', '.join(['%s'] * len(spectacle_ids))
         requete += """ AND sid IN ({})""".format(placeholder)
-        cursor.db_query(requete, tuple(spectacle_ids))
+        res = cursor.db_query(requete, tuple(spectacle_ids))
     else:
-        cursor.execute(requete)
-    res = cursor.fetchall()
+        res = cursor.db_query(requete)
     return res
 
 
 def algorithme_assignation_scenes():
     connection = pool.get_connection()
-    cursor_horaire_scenes = connection.get_connection().cursor()
-    cursor_artistes = connection.get_connection().cursor()
-    cursor_assignation_spectacles = connection.get_connection().cursor()
-    cursor_horaire_scenes.execute(
+    cursor_horaire_scenes = connection.cursor()
+    cursor_artistes = connection.cursor()
+    cursor_assignation_spectacles = connection.cursor()
+    cursor_horaire_scenes.db_query(
         f'SELECT * FROM festiqueb.PlagesHoraires, festiqueb.Lieux ORDER BY capacite, heureDebut DESC;')
 
-    cursor_artistes.execute(f'SELECT aid, popularite FROM festiqueb.Artistes ORDER BY popularite;')
+    cursor_artistes.db_query(f'SELECT aid, popularite FROM festiqueb.Artistes ORDER BY popularite;')
 
     for x in range(0, cursor_artistes.arraysize):
         insertion = f"""
         INSERT INTO festiqueb.Spectacles {x} VALUE
         ()
         """
-        cursor_assignation_spectacles.execute(insertion)
+        cursor_assignation_spectacles(insertion)
     connection.close()

@@ -18,8 +18,8 @@ def magasin():
 @app.route('/magasin/<tbid>')
 def details_billets(tbid):
     type_billet = select_type_billet_par_id(tbid)
-    return render_template('details-billet.html', type_billet=type_billet,
-                           spectacles=selectionner_spectacles())
+    spectacles = selectionner_spectacles()
+    return render_template('details-billet.html', type_billet=type_billet, spectacles=spectacles)
 
 
 @app.route('/panier')
