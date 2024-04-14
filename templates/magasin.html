@@ -28,21 +28,17 @@
     </style>
 </head>
 
-<body>
-{% include menu %}
-
+<body onload="afficherItemPanier()">
+{% include 'menu.html' %}
 <div id="types-billets">
     {% for typeBillet in types_billets %}
-        <div class="card">
-            <p>{{ typeBillet[1] }}</p>
-            <p>${{ typeBillet[3] }}</p>
-            <button onclick="location.href = 'magasin/{{ typeBillet[0] }}'" type="button">Acheter</button>
-        </div>
+    <div class="card">
+        <p>{{ typeBillet.nom }}</p>
+        <p>${{ typeBillet.prix }}</p>
+        <button onclick="location.href = 'magasin/{{ typeBillet.tbid }}'" type="button">Acheter</button>
+    </div>
     {% endfor %}
 
 </div>
-
-<button onclick="ach" type="button">Finaliser Commande</button>
-
 </body>
 </html>

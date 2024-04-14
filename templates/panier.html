@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FestiQueb - Panier</title>
+    <script src="../static/app.js"></script>
+    <style>
+        .item-panier {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+
+        }
+
+        .item-nom {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body onload="trouverItemsPanier()">
+{% include 'menu.html' %}
+<h1>Panier</h1>
+
+<div id="liste-items-panier">
+</div>
+</body>
+</html>

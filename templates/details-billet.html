@@ -11,9 +11,11 @@
     </style>
 </head>
 <body>
-{% include menu %}
-<h1>{{ type_billet[1] }}</h1>
-<p>${{ type_billet[3] }}</p>
+{% include menu.html %}
+<button onclick="location.href ='/magasin'"><-</button>
+
+<h1>{{ type_billet.nom }}</h1>
+<p>${{ type_billet.prix }}</p>
 <ul>
     <li>
         <label for="quantite">Quantité: </label>
@@ -23,12 +25,12 @@
         <label for="spectacle">Spectacle: </label>
         <select name="spectacle" id="spectacle">
             {% for spectacle in spectacles %}
-                <option value="{{ spectacle[0] }}">{{ spectacle[1] }}</option>
+            <option value="{{ spectacle.sid }}">{{ spectacle.nom }}</option>
             {% endfor %}
         </select>
     </li>
 </ul>
-<button onclick="ajouterAuPanier('{{ type_billet[0] }}')" type="button">Ajouter au panier</button>
+<button onclick="ajouterAuPanier('{{ type_billet.tbid }}')" type="button">Ajouter au panier</button>
 
 
 </body>

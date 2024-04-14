@@ -8,11 +8,11 @@ CREATE DATABASE IF NOT EXISTS festiqueb;
 DROP TABLE IF EXISTS TypesBillets;
 CREATE TABLE IF NOT EXISTS TypesBillets
 (
-    tbid           varchar(36) DEFAULT (UUID()) PRIMARY KEY,
-    nom            varchar(200) NOT NULL,
-    sans_limite    bool         NOT NULL,
-    prix           double,
-    categories_age enum ('7-12','13-17','18-64','65+'),
+    tbid          varchar(36) DEFAULT (UUID()) PRIMARY KEY,
+    nom           varchar(200) NOT NULL,
+    sans_limite   bool         NOT NULL,
+    prix          double,
+    categorie_age enum ('7-12','13-17','18-64','65+'),
     CHECK (prix >= 0)
 );
 

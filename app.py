@@ -11,25 +11,42 @@ def welcome_page():  # put application's code here
 
 @app.route('/magasin')
 def magasin():
-    type_billets = list(selectionner_types_billets())
-    return render_template('magasin.html', types_billets=type_billets)
+    types_billets = list(selectionner_types_billets())
+    return render_template('magasin.html', types_billets=types_billets)
 
 
 @app.route('/magasin/<tbid>')
 def details_billets(tbid):
-    type_billet = select_type_billet(tbid)
-    return render_template('details-billet.html', type_billet=type_billet[0], spectacles=selectionner_spectacles())
+    type_billet = select_type_billet_par_id(tbid)
+    return render_template('details-billet.html', type_billet=type_billet,
+                           spectacles=selectionner_spectacles())
 
 
-@app.route('/programmation')
+@app.route('/panier')
 def programmation():
-    # TODO faire page d'affichage pour la programmation du festival
-    return render_template('programmation.html')
+    return render_template('panier.html')
+
+
+# @app.route('/programmation')
+# def programmation():
+#     # TODO faire page d'affichage pour la programmation du festival
+#     return render_template('programmation.html')
 
 
 @app.get('/types-billets')
 def req_types_billets():
     return selectionner_types_billets()
+
+
+@app.get('/item-panier')
+def req_item_panier():
+    tbid = request.args.get('tbid')
+    sid = request.args.get('sid')
+    reponse = {
+        "status": 200,
+        "body": selectionner_item_panier(tbid, sid)
+    }
+    return jsonify(reponse)
 
 
 @app.context_processor
