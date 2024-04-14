@@ -28,8 +28,8 @@
     </style>
 </head>
 
-<body onload="afficherItemPanier()">
-{% include 'menu.html' %}
+<body>
+{% include menu %}
 <div id="types-billets">
     {% for typeBillet in types_billets %}
     <div class="card">

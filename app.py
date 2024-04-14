@@ -54,19 +54,19 @@ def injecter_menu():
     return {'menu': 'menu.html'}
 
 
-# TODO ajouter route pour créer un compte
-
+# TODO ajouter route pour créer un compte (4)
 # TODO ajouter route pour se connecter
 
-# TODO ajouter route pour valider un billet à l'entrée
+# NOT TODO ajouter route pour valider un billet à l'entrée (2)
 
-# TODO ajouter routes pour faire gestion des spectacles (ajouter description, associer les artistes aux scène(procedure faite))
+# NOT TODO ajouter routes pour faire gestion des spectacles (ajouter description, associer les artistes aux scène(procedure faite))
 
 
 @app.post('/commande')
 def creer_commande():
     return
-    # TODO compléter fonction pour faire un commander. Ajouter commande à BD, créer billet et créer accès billet
+    # TODO compléter fonction pour faire un commander. Ajouter commande à BD, créer billet et créer accès billet (6)
+    # ()
 
     # data = request.json
     # print(request)

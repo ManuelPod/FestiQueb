@@ -1,6 +1,10 @@
-document.onload = function () {
-    console.log('Load')
+const domaine = 'http://' + location.host
+
+window.onload = function () {
     initialiserEvenements()
+    if (location.href === domaine + '/panier') {
+        trouverItemsPanier()
+    }
 }
 
 function ajouterAuPanier(typeBilletId) {

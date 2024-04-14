@@ -5,20 +5,25 @@
     <title>FestiQueb - Panier</title>
     <script src="../static/app.js"></script>
     <style>
+        #liste-items-panier {
+            overflow-y: scroll;
+        }
+
         .item-panier {
             border: 1px solid #ccc;
+            border-radius: 10px;
             padding: 10px;
             margin-bottom: 10px;
-
         }
 
         .item-nom {
             font-weight: bold;
+            display: inline;
         }
     </style>
 </head>
-<body onload="trouverItemsPanier()">
-{% include 'menu.html' %}
+<body>
+{% include menu %}
 <h1>Panier</h1>
 
 <div id="liste-items-panier">
