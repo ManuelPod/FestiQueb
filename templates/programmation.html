@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FestiQueb - Programmation</title>
+    <script src="../static/app.js"></script>
+    <style>
+        .artiste img {
+            width: 200px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+{% include menu %}
+<h1>Programmation</h1>
+<div class="artistes">
+    {% for artiste in artistes %}
+    <div class="artiste">
+        <img src="../static/images/{{ artiste.image }}" alt="">
+        <h3>{{ artiste.nom }}</h3>
+        <p>{{ artiste.date }}</p>
+        <p>Heure de début: {{ artiste.heureDebut }} - Heure de fin: {{ artiste.heureFin }}</p>
+    </div>
+    {% endfor %}
+</div>
+<div id="programmation">
+</div>
+</body>
+</html>

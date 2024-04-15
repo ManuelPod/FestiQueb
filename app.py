@@ -1,8 +1,8 @@
-from flask import Flask, request, make_response, render_template, jsonify
+from flask import Flask, request, make_response, render_template, jsonify, request, redirect, url_for, session
 from static.database import *
 
 app = Flask(__name__)
-
+app.secret_key = 'super secret key'
 
 @app.route('/')
 def welcome_page():  # put application's code here
@@ -23,14 +23,17 @@ def details_billets(tbid):
 
 
 @app.route('/panier')
-def programmation():
+def panier():
     return render_template('panier.html')
 
 
-# @app.route('/programmation')
-# def programmation():
-#     # TODO faire page d'affichage pour la programmation du festival
-#     return render_template('programmation.html')
+@app.route('/programmation')
+def programmation():
+    artistes = selectionner_programmation()
+    # Print the number and content of artistes
+    print("Number of artists:", len(artistes))
+    print("Artists:", artistes)
+    return render_template('programmation.html', artistes=artistes)
 
 
 @app.get('/types-billets')
@@ -79,6 +82,50 @@ def creer_commande():
     #     reponse.status = 400
     #     reponse.message = 'Le paiement est invalide!'
     #     return jsonify(reponse)
+
+
+@app.route('/creation_compte', methods=['GET', 'POST'])
+def inscription():
+    if request.method == 'POST':
+        connection = pool.get_connection()
+        nom = request.form['nom']
+        mot_de_passe = request.form['mot_de_passe']
+        telephone = request.form['telephone']
+        date_naissance = request.form['date_naissance']
+        courriel = request.form['courriel']
+
+        cursor = connection.cursor()
+
+        insert_user(nom, mot_de_passe, telephone, date_naissance, courriel)
+
+        connection.commit()
+        cursor.close()
+
+        return redirect('/')
+    if request.method == 'GET':
+        return render_template('creation-compte.html')
+
+@app.route('/connexion', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        print(f"Password from form: {password}")  # Debugging line
+
+        try:
+            if check_user_password(email, password):
+                # Authentication successful
+                session['logged_in'] = True
+                session['email'] = email
+                return redirect('/')
+            else:
+                # Authentication failed
+                return "Email ou mot de passe incorrect"
+        except ValueError as e:
+            return str(e)
+
+    if request.method == 'GET':
+        return render_template('connexion.html')
 
 
 def verifier_paiement():
