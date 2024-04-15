@@ -1,5 +1,5 @@
+cryptography==42.0.5
 flask~=2.2.2
+pymysql-pool~=0.4.6
 pymysql~=1.1.0
 python-dotenv~=0.21.0
-pymysql-pool~=0.4.6
-pymysqlpool~=1.0.9
