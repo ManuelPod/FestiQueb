@@ -36,12 +36,8 @@ def select_type_billet_par_id(tbid):
     cursor = connection.cursor()
     res = cursor.db_query(f"SELECT * FROM festiqueb.TypesBillets WHERE tbid='{tbid}'")
     connection.close()
-    return res
+    return res[0]
 
-
-# def commander_billet():
-#     cursor = connection.cursor()
-#     cursor.execute(f'INSERT INTO festiqueb.Commandes')
 
 def selectionner_spectacles(spectacle_ids=None):
     connection = pool.get_connection()
@@ -64,22 +60,3 @@ def selectionner_spectacles(spectacle_ids=None):
     else:
         res = cursor.db_query(requete)
     return res
-
-
-def algorithme_assignation_scenes():
-    connection = pool.get_connection()
-    cursor_horaire_scenes = connection.cursor()
-    cursor_artistes = connection.cursor()
-    cursor_assignation_spectacles = connection.cursor()
-    cursor_horaire_scenes.db_query(
-        f'SELECT * FROM festiqueb.PlagesHoraires, festiqueb.Lieux ORDER BY capacite, heureDebut DESC;')
-
-    cursor_artistes.db_query(f'SELECT aid, popularite FROM festiqueb.Artistes ORDER BY popularite;')
-
-    for x in range(0, cursor_artistes.arraysize):
-        insertion = f"""
-        INSERT INTO festiqueb.Spectacles {x} VALUE
-        ()
-        """
-        cursor_assignation_spectacles(insertion)
-    connection.close()

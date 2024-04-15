@@ -156,8 +156,7 @@ VALUES (DEFAULT, 'Roxanne Maheu', '9W3gk28!$', '418-123-4567', '1993-01-20', 'ro
 # Relation Creer intégrée dans Commandes (champ creer)
 # Note: La colonne montant devra être calculée à partir de Billets et Types_billets?
 DROP TABLE IF EXISTS Commandes;
-CREATE TABLE IF NOT EXISTS
-    Commandes
+CREATE TABLE IF NOT EXISTS Commandes
 (
     cid        varchar(36) DEFAULT (UUID()) PRIMARY KEY,
     montant    double,
