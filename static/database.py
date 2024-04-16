@@ -6,7 +6,7 @@ import re
 from passlib.hash import sha256_crypt
 from datetime import datetime
 
-dotenv.load_dotenv('.env-dev')
+dotenv.load_dotenv('.env')
 
 pool = pymysqlpool.ConnectionPool(
     host=os.environ.get('BD_HOST'),
@@ -80,7 +80,6 @@ def selectionner_commande_par_id(id_commande):
     connection = pool.get_connection()
     cursor = connection.cursor()
     res = cursor.db_query(f'SELECT * FROM festiqueb.Commandes WHERE cid=%s', (id_commande,))[0]
-    print(res)
     connection.commit()
     connection.close()
     return res
@@ -136,7 +135,6 @@ def verify_password(password, actual):
 
 
 def insert_user(nom, mot_de_passe, telephone, date_naissance, courriel):
-
     if not check_user_email(courriel):
         return "courriel invalide"
 
@@ -186,11 +184,14 @@ def check_user_password(email, password):
         print(e)
         return False
 
+
 def check_user_email(email):
     return re.match(r"[^@]+@[^@]+\.[^@]+", email) is not None
 
+
 def check_user_telephone(telephone):
     return re.match(r"\d{3}-\d{3}-\d{4}", telephone) is not None
+
 
 def check_user_date(date_naissance):
     try:

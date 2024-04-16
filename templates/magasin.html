@@ -33,7 +33,7 @@
 <div id="types-billets">
     {% for typeBillet in types_billets %}
     <div class="card">
-        <p>{{ typeBillet.nom }}</p>
+        <p>{{ typeBillet.nom }} - {{typeBillet.categorie_age}}</p>
         <p>${{ typeBillet.prix }}</p>
         <button onclick="location.href = 'magasin/{{ typeBillet.tbid }}'" type="button">Acheter</button>
     </div>

@@ -30,6 +30,12 @@ def panier():
     return render_template('panier.html')
 
 
+@app.route('/deconnexion')
+def deconnexion():
+    session.clear()
+    return render_template('index.html')
+
+
 @app.route('/programmation')
 def programmation():
     artistes = selectionner_programmation()
@@ -99,7 +105,6 @@ def creer_commande():
 @app.post('/valider-billet')
 def valider_billet():
     args = dict(json.loads(request.data.decode('utf-8')))
-    print(args)
     resultat = verifier_acces(args.get('id_billet'), args.get('id_spectacle'))
     reponse = {
         "status": 200 if resultat else 400,
@@ -161,13 +166,11 @@ def login():
             if check_user_password(email, password):
                 # Authentication successful
                 user = get_user(email)
-                print(user)
                 session['logged_in'] = True
                 session['email'] = email
                 session['user_id'] = user['uid']
                 session['nom'] = user['nom']
                 session['is_admin'] = True if user['est_admin'] == 1 else False
-                print(session['is_admin'])
                 return redirect('/')
             else:
                 # Authentication failed

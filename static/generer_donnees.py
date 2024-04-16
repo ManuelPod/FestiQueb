@@ -3,10 +3,11 @@ from decimal import *
 import pymysqlpool
 from dotenv import load_dotenv
 import os
+import pathlib
 
 from passlib.handlers.sha2_crypt import sha256_crypt
 
-load_dotenv('../.env-dev')
+load_dotenv('../.env')
 
 pool = pymysqlpool.ConnectionPool(
     host=os.environ.get('BD_HOST'),
@@ -15,6 +16,16 @@ pool = pymysqlpool.ConnectionPool(
     passwd=os.environ.get('BD_PASSWORD'),
     port=int(os.environ.get('BD_PORT')),
     cursorclass=pymysqlpool.DictCursor)
+
+
+# def initDb():
+#     connection = pool.get_connection()
+#     cursor = connection.cursor()
+#     cursor.db_modify('CREATE DATABASE IF NOT EXISTS festiqueb;')
+#     cursor.db_modify('USE festiqueb;')
+#
+#     cursor.db_modify(f"SOURCE init.sql")
+#     connection.commit()
 
 
 def generer_types_billets():
@@ -79,8 +90,11 @@ def generer_admin():
     connection = pool.get_connection()
     cursor = connection.cursor()
     cursor.db_modify(
-        f"INSERT INTO festiqueb.Utilisateurs VALUE (DEFAULT,'Manuel Podeur','{sha256_crypt.hash('123')}',"
-        "'123-123-1223','2000-01-01','manuel.podeur@gmail.com',TRUE)")
+        f"INSERT INTO festiqueb.Utilisateurs VALUE (DEFAULT,'Admin','{sha256_crypt.hash('123')}',"
+        "'123-123-1223','2000-01-01','admin@gmail.com',TRUE)")
+    cursor.db_modify(
+        f"INSERT INTO festiqueb.Utilisateurs VALUE (DEFAULT,'Client','{sha256_crypt.hash('123')}',"
+        "'123-123-1223','2000-01-01','client@gmail.com',FALSE)")
     connection.commit()
     connection.close()
     print('Admins générés.')

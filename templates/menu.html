@@ -51,6 +51,7 @@
 
 
     </style>
+    <script src="../static/app.js"></script>
 </head>
 <body>
 <div class="menu-container">
@@ -65,9 +66,10 @@
         <button onclick="location.href = '/creation_compte'" type="button">Créer un compte</button>
         <button onclick="location.href = '/connexion'" type="button">Se connecter</button>
         {% else %}
+        <button onclick="location.href = '/deconnexion'">Déconnexion</button>
+        {% endif%}
         <span class="pastille-panier" id="pastille-panier">0</span>
         <img class="icon" onclick="location.href='/panier'" src="../static/images/cart.png" alt="">
-        {% endif%}
 
     </div>
 </div>

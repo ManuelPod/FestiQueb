@@ -23,6 +23,7 @@ function ajouterAuPanier(typeBilletId) {
     }
     document.dispatchEvent(new CustomEvent('majIconePanier', {detail: panier.length}))
     sessionStorage.setItem('items', JSON.stringify(panier))
+    location.href = '/magasin'
 }
 
 function acheterBillet() {
@@ -41,6 +42,7 @@ function acheterBillet() {
     }).then((reponse) => {
         return reponse.json()
     }).then(json => {
+        sessionStorage.clear()
         afficherConfirmationAchat(json.body)
     })
 }
@@ -126,6 +128,7 @@ function validerBillet(event) {
                                 INVALID
                             </div>`
             }
+            document.querySelector('#id_billet').value = ''
         }
     )
 }
