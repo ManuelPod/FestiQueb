@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS Utilisateurs
     CHECK (courriel LIKE '%_@__%.__%'),
     CHECK (telephone LIKE '___-___-____')
 );
+CREATE INDEX indexUtilisateurs ON Utilisateurs (courriel) USING HASH;
 
 
 # Gâchette qui vérifie la validité de la date de naissance d'un utilisateur. Si pour quelconque raison, la date
@@ -174,7 +175,7 @@ VALUES (DEFAULT, 'Roxanne Maheu', '9W3gk28!$', '418-123-4567', '1993-01-20', 'ro
        (DEFAULT, 'Marie-Claude Gagnon', '8G3tP6M$j%', '418-234-5678', '1985-05-26', 'marie-claude.gagnon@outlook.com',
         FALSE);
 
-        
+
 
 # Table Commandes
 # (liste aléatoire générée par chatGPT)
@@ -256,6 +257,7 @@ CREATE TABLE IF NOT EXISTS Lieux
     CHECK ( capacite >= 0 ),
     CHECK ( telephone LIKE '___-___-____' )
 );
+CREATE INDEX indexLieux ON Lieux (capacite) USING BTREE;
 
 INSERT INTO Lieux
 VALUES ('123 Rue du Bonheur, Montréal', 'Le Paradis Perdu', '514-123-4567', 15000, 1),
@@ -284,6 +286,8 @@ CREATE TABLE IF NOT EXISTS Artistes
     CHECK ( courriel LIKE '%_@__%.__%' ),
     CHECK ( popularite >= 0 AND popularite <= 10 )
 );
+
+CREATE INDEX indexArtistes ON Artistes (popularite) USING BTREE;
 
 INSERT INTO Artistes
 VALUES (DEFAULT, 'Céline Dion', '514-123-4567', 'celine.dion@example.com', 3,
@@ -357,6 +361,8 @@ CREATE TABLE IF NOT EXISTS PlagesHoraires
     heureDebut time NOT NULL,
     heureFin   time NOT NULL
 );
+
+CREATE INDEX indexPlageHoraire ON PlagesHoraires (date) USING BTREE;
 
 # Cette gâchette s'assure lors de la création d'une plage horaire qu'un plage horaire similaire n'existe pas déjà.
 # Il serait redondant d'avoir plusieurs plages horaires avec une même date heure de début et heure de fin.
