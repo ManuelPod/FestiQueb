@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS Utilisateurs
     CHECK (courriel LIKE '%_@__%.__%'),
     CHECK (telephone LIKE '___-___-____')
 );
+CREATE INDEX indexUtilisateurs ON Utilisateurs (courriel) USING HASH;
 
 DROP TRIGGER IF EXISTS VerifierDateNaissance;
 DELIMITER //
@@ -229,6 +230,7 @@ CREATE TABLE IF NOT EXISTS Lieux
     CHECK ( capacite >= 0 ),
     CHECK ( telephone LIKE '___-___-____' )
 );
+CREATE INDEX indexLieux ON Lieux (capacite) USING BTREE;
 
 INSERT INTO Lieux
 VALUES ('123 Rue du Bonheur, Montréal', 'Le Paradis Perdu', '514-123-4567', 15000, 1),
@@ -257,6 +259,8 @@ CREATE TABLE IF NOT EXISTS Artistes
     CHECK ( courriel LIKE '%@%.%' ),
     CHECK ( popularite >= 0 AND popularite <= 10 )
 );
+
+CREATE INDEX indexArtistes ON Artistes (popularite) USING BTREE;
 
 INSERT INTO Artistes
 VALUES
@@ -304,6 +308,8 @@ CREATE TABLE IF NOT EXISTS PlagesHoraires
     heureDebut time NOT NULL,
     heureFin   time NOT NULL
 );
+
+CREATE INDEX indexPlageHoraire ON PlagesHoraires (date) USING BTREE;
 
 DROP TRIGGER IF EXISTS PlageHoraireNonDoublon;
 DELIMITER //
