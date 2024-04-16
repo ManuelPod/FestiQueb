@@ -211,7 +211,7 @@ DROP TABLE IF EXISTS Billets;
 CREATE TABLE IF NOT EXISTS Billets
 (
     bid         varchar(36) DEFAULT (UUID()) PRIMARY KEY,
-    participant varchar(200) NOT NULL,
+    participant varchar(200),
     tbid        varchar(36) REFERENCES TypesBillets (tbid),
     cid         varchar(36) REFERENCES Commandes (cid)
 );
@@ -499,6 +499,14 @@ CREATE TABLE IF NOT EXISTS Acces
 );
 
 
+# Procedure pour commander gérer la commande de billets
+# Cette procedure reçoit une liste d'items en format JSON qui contiennent
+# tous un typeBilletId, un spectacleId et une quantité.
+# La procedure commence par générer un commande, et initialise le montant à 0.
+# Ensuite, elle génère le nombre de billets nécessaires selon la quantité et pour chaque billet,
+# elle génère les accès. Si un type de billet est une passe donc avec l'attribut sans_limite,
+# on génère un accès par spectacle. Sinon, on génère un accès pour le spectacle spécifié dans l'item.
+# Finalement on retourne l'id de la commande
 DROP PROCEDURE IF EXISTS CommanderBillets;
 DELIMITER //
 CREATE PROCEDURE IF NOT EXISTS CommanderBillets(json_items varchar(1000), id_utilisateur varchar(36),
@@ -565,7 +573,7 @@ DELIMITER ;
 
 # Utilisateurs (uid: varchar(36), nom: varchar(100),
 # 			  mot_de_passe: char(64), telephone: varchar(12),
-# 			  date_naissance: date,  courriel: varchar(100))
+# 			  date_naissance: date,  courriel: varchar(100), est_admin: bool)
 #
 # TypesBillets (tbid: varchar(36), nom: varchar(200),
 #               sans_limite: bool, prix: double,
