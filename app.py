@@ -1,4 +1,4 @@
-from flask import Flask, request, make_response, render_template, jsonify, request, redirect, url_for, session
+from flask import Flask, request, make_response, render_template, jsonify, request, redirect, url_for, session, flash
 from static.database import *
 
 app = Flask(__name__)
@@ -113,6 +113,7 @@ def valider_billet():
 def inscription():
     if request.method == 'POST':
         connection = pool.get_connection()
+
         nom = request.form['nom']
         mot_de_passe = request.form['mot_de_passe']
         telephone = request.form['telephone']
@@ -121,12 +122,26 @@ def inscription():
 
         cursor = connection.cursor()
 
-        insert_user(nom, mot_de_passe, telephone, date_naissance, courriel)
+        # Validate user input
+        if not check_user_email(courriel):
+            flash('courriel invalide', 'error')
+            return redirect(request.url)
 
+        if not check_user_telephone(telephone):
+            flash('numéro de téléphone invalide', 'error')
+            return redirect(request.url)
+
+        if not check_user_date(date_naissance):
+            flash('date de naissance invalide', 'error')
+            return redirect(request.url)
+
+        # If validation passes, insert user into the database
+        insert_user(nom, mot_de_passe, telephone, date_naissance, courriel)
         connection.commit()
         cursor.close()
 
-        return redirect('/')
+        return redirect('/connexion')
+
     if request.method == 'GET':
         return render_template('creation-compte.html')
 

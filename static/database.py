@@ -2,7 +2,9 @@ import dotenv
 import os
 import pymysqlpool
 import uuid
+import re
 from passlib.hash import sha256_crypt
+from datetime import datetime
 
 dotenv.load_dotenv('.env-dev')
 
@@ -131,11 +133,20 @@ def verify_password(password, actual):
 
 
 def insert_user(nom, mot_de_passe, telephone, date_naissance, courriel):
+
+    if not check_user_email(courriel):
+        return "courriel invalide"
+
+    if not check_user_date(date_naissance):
+        return "date_naissance invalide"
+
+    if not check_user_telephone(telephone):
+        return "telephone invalide"
+
     connection = pool.get_connection()
     cursor = connection.cursor()
     mot_de_passe_hache = hash_password(mot_de_passe)
     uid = uuid.uuid4()
-    print(mot_de_passe_hache)
 
     request = """
     INSERT INTO festiqueb.utilisateurs (uid, nom, mot_de_passe, telephone, date_naissance, courriel)
@@ -144,6 +155,7 @@ def insert_user(nom, mot_de_passe, telephone, date_naissance, courriel):
     cursor.db_modify(request, (uid, nom, mot_de_passe_hache, telephone, date_naissance, courriel))
     connection.commit()
     connection.close()
+    return "Utilisateur créé"
 
 
 def get_user(email):
@@ -169,4 +181,17 @@ def check_user_password(email, password):
     except Exception as e:
         connection.close()
         print(e)
+        return False
+
+def check_user_email(email):
+    return re.match(r"[^@]+@[^@]+\.[^@]+", email) is not None
+
+def check_user_telephone(telephone):
+    return re.match(r"\d{3}-\d{3}-\d{4}", telephone) is not None
+
+def check_user_date(date_naissance):
+    try:
+        birth_date = datetime.strptime(date_naissance, '%Y-%m-%d').date()
+        return birth_date <= datetime.now().date()
+    except ValueError:
         return False
