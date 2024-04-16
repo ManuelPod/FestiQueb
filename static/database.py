@@ -87,13 +87,16 @@ def selectionner_commande_par_id(id_commande):
 def verifier_acces(id_billet, id_spectacle):
     connection = pool.get_connection()
     cursor = connection.cursor()
-    res = cursor.db_query(f'SELECT * '
-                          f'FROM festiqueb.Acces WHERE bid=%s AND sid=%s', (id_billet, id_spectacle))[0]
-    if res.get('disponible') == 1:
-        cursor.db_modify('UPDATE festiqueb.Acces SET disponible = FALSE WHERE bid=%s AND sid=%s',
-                         (id_billet, id_spectacle))
-        resultat = True
-    else:
+    try:
+        res = cursor.db_query(f'SELECT * '
+                              f'FROM festiqueb.Acces WHERE bid=%s AND sid=%s', (id_billet, id_spectacle))[0]
+        if res.get('disponible') == 1:
+            cursor.db_modify('UPDATE festiqueb.Acces SET disponible = FALSE WHERE bid=%s AND sid=%s',
+                             (id_billet, id_spectacle))
+            resultat = True
+        else:
+            resultat = False
+    except:
         resultat = False
     connection.commit()
     connection.close()

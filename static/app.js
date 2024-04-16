@@ -105,3 +105,29 @@ function afficherErreurPaiement() {
     location.href = `/erreur-comande`
 }
 
+function validerBillet(event) {
+    fetch('/valider-billet', {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            id_billet: document.querySelector('#id_billet').value,
+            id_spectacle: document.querySelector('#id_spectacle').value
+        })
+    }).then(res => res.json()).then((response) => {
+            const validation = document.querySelector('#resultat-validation');
+            if (response.body) {
+                validation.innerHTML = `<div style="color: limegreen">
+                                VALID
+                            </div>`
+            } else {
+                validation.innerHTML = `<div style="color: red">
+                                INVALID
+                            </div>`
+            }
+        }
+    )
+}
+
+

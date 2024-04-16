@@ -1,3 +1,5 @@
+import json
+
 from flask import Flask, request, make_response, render_template, jsonify, request, redirect, url_for, session
 from static.database import *
 
@@ -96,9 +98,11 @@ def creer_commande():
 
 @app.post('/valider-billet')
 def valider_billet():
-    resultat = verifier_acces(request.form.get('id_billet'), request.form.get('spectacle'))
+    args = dict(json.loads(request.data.decode('utf-8')))
+    print(args)
+    resultat = verifier_acces(args.get('id_billet'), args.get('id_spectacle'))
     reponse = {
-        "status": 200,
+        "status": 200 if resultat else 400,
         "body": resultat
     }
     return jsonify(reponse)

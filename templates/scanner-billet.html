@@ -2,24 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Scanner</title>
+    <script src="../static/app.js"></script>
+
 </head>
 <body>
 {% include menu %}
-<form id="form-validation" target="frame" action="/valider-billet" method="post">
+<div>
     <label for="id_billet"></label>
     <input id="id_billet" name="id_billet" type="text">
-    <button type="submit">Valider Billet</button>
-    <label for="spectacle">Spectacle: </label>
-    <select name="spectacle" id="spectacle">
+    <label for="id_spectacle">Spectacle: </label>
+    <select name="spectacle" id="id_spectacle">
         {% for spectacle in spectacles %}
         <option value="{{ spectacle.sid }}">{{ spectacle.nom }}</option>
         {% endfor %}
     </select>
-</form>
-<iframe name="frame" frameborder="0">
-    {% if true %}
+    <button onclick="validerBillet(event)" type="button">Valider Billet</button>
+</div>
 
-</iframe>
+<div id="resultat-validation"></div>
 </body>
 </html>
