@@ -4,6 +4,8 @@ import pymysqlpool
 from dotenv import load_dotenv
 import os
 
+from passlib.handlers.sha2_crypt import sha256_crypt
+
 load_dotenv('../.env-dev')
 
 pool = pymysqlpool.ConnectionPool(
@@ -11,8 +13,8 @@ pool = pymysqlpool.ConnectionPool(
     user=os.environ.get('BD_USER'),
     database=os.environ.get('BD_DATABASE'),
     passwd=os.environ.get('BD_PASSWORD'),
-    port=int(os.environ.get('BD_PORT'))
-)
+    port=int(os.environ.get('BD_PORT')),
+    cursorclass=pymysqlpool.DictCursor)
 
 
 def generer_types_billets():
@@ -61,5 +63,30 @@ def association_spectacles():
     connection.close()
 
 
+def generer_utilisateurs():
+    connection = pool.get_connection()
+    cursor = connection.cursor()
+    utilisateurs = cursor.db_query(f"SELECT * FROM festiqueb.Utilisateurs")
+    for utilisateur in utilisateurs:
+        cursor.db_modify(f"UPDATE festiqueb.Utilisateurs SET mot_de_passe = %s WHERE uid = %s",
+                         (sha256_crypt.hash(utilisateur['mot_de_passe']), utilisateur['uid']))
+    connection.commit()
+    connection.close()
+    print('Utilisateurs générés')
+
+
+def generer_admin():
+    connection = pool.get_connection()
+    cursor = connection.cursor()
+    cursor.db_modify(
+        f"INSERT INTO festiqueb.Utilisateurs VALUE (DEFAULT,'Manuel Podeur','{sha256_crypt.hash('123')}',"
+        "'123-123-1223','2000-01-01','manuel.podeur@gmail.com',TRUE)")
+    connection.commit()
+    connection.close()
+    print('Admins générés.')
+
+
 generer_types_billets()
 association_spectacles()
+generer_utilisateurs()
+generer_admin()

@@ -1,6 +1,6 @@
 const domaine = 'http://' + location.host
 
-window.onload = function () {
+window.onload = () => {
     initialiserEvenements()
     if (location.href === domaine + '/panier') {
         trouverItemsPanier()
@@ -9,7 +9,7 @@ window.onload = function () {
 
 function ajouterAuPanier(typeBilletId) {
     const quantite = parseInt(document.querySelector('#quantite').value)
-    const spectacleId = document.querySelector('#spectacle').value
+    const spectacleId = document.querySelector('#spectacle')?.value
 
     if (!sessionStorage.getItem('items')) {
         sessionStorage.setItem('items', JSON.stringify([]))
@@ -27,27 +27,33 @@ function ajouterAuPanier(typeBilletId) {
 
 function acheterBillet() {
     const panier = JSON.parse(sessionStorage.getItem('items'))
-    fetch('/commande', {
-        body: {
-            panier
-        },
-        method: 'POST'
+    if (!verifierPaiement()) {
+        return false;
+    }
+    fetch('/commander', {
+        method: 'POST',
+        body: JSON.stringify(panier),
+        headers: {
+            "content-type": "application/json; charset=utf-8"
+        }
     }).catch((erreur) => {
         afficherErreurPaiement(erreur.message)
     }).then((reponse) => {
-        afficherConfirmationAchat(reponse.body, reponse.body);
-    });
+        return reponse.json()
+    }).then(json => {
+        afficherConfirmationAchat(json.body)
+    })
 }
 
 function trouverItemsPanier() {
     const items = JSON.parse(sessionStorage.getItem('items'))
     items.forEach(async (item) => {
-        await fetch(`/item-panier?${new URLSearchParams({tbid: item.typeBilletId, sid: item.spectacleId})}`, {
+        await fetch(`/item-panier?tbid=${item.typeBilletId}&sid=${item.spectacleId ?? ''}`, {
             method: 'GET',
             headers: {
                 "Content-Type": "application/json"
             }
-        }).then((reponse) => {
+        }).then(reponse => {
             return reponse.json()
         }).then(data => {
             data.body.quantite = item.quantite
@@ -59,35 +65,43 @@ function trouverItemsPanier() {
 function afficherItemPanier(item) {
     const divPanier = document.querySelector('#liste-items-panier')
     const nouveauItem = document.createElement('div')
-    console.log(item)
     nouveauItem.innerHTML = `<div class="item-panier">
-                                <p class="item-nom">${item.nom} - ${item.categorie_age}</p>
-                                <p>Prix: $${item.prix * item.quantite}</p>
+                                <p class="item-nom">${item.nom} - ${item.categorie_age}  ${item.sid ? " - " + item.nom_artiste : ""}</p>
+                                <p>Prix: $${item.prix * item.quantite}</p> <span><button onclick="supprimerDuPanier(event,'${item.tbid}', '${item.sid}')">Supprimer du panier</button></span>
                                 <p>Quantité: ${item.quantite}</p>
                             </div>`
 
     divPanier.appendChild(nouveauItem)
 }
 
+function supprimerDuPanier(event, tbid, sid) {
+    let panier = JSON.parse(sessionStorage.getItem('items'))
+    let index = panier.findIndex(item => item.typeBilletId === tbid && item.spectacleId === sid)
+    panier.pop(index)
+    sessionStorage.setItem('items', JSON.stringify(panier))
+    document.dispatchEvent(new CustomEvent('majIconePanier', {detail: panier.length}))
+    event.target.parentElement.parentElement.remove()
+}
+
+function verifierPaiement() {
+    return true
+}
+
 function initialiserEvenements() {
     const pastille = document.querySelector('#pastille-panier')
     document.addEventListener('majIconePanier', (event) => {
-        console.log(event)
         pastille.innerText = event.detail
-
     })
 
-
     document.dispatchEvent(new CustomEvent('majIconePanier', {detail: JSON.parse(sessionStorage.getItem('items')).length}))
-
 }
 
 
-function afficherConfirmationAchat() {
-
+function afficherConfirmationAchat(commandeId) {
+    location.href = `/confirmation-achat?id_commande=${commandeId}`
 }
 
 function afficherErreurPaiement() {
-
+    location.href = `/erreur-comande`
 }
 

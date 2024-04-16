@@ -4,6 +4,7 @@ from static.database import *
 app = Flask(__name__)
 app.secret_key = 'super secret key'
 
+
 @app.route('/')
 def welcome_page():  # put application's code here
     return render_template('index.html')
@@ -41,13 +42,29 @@ def req_types_billets():
     return selectionner_types_billets()
 
 
+@app.route('/confirmation-achat')
+def afficher_confirmation_commande():
+    id_commande = request.args.get('id_commande')
+    commande = selectionner_commande_par_id(id_commande)
+    return render_template('confirmation-commande.html', commande=commande)
+
+
+@app.route('/scanner-billet')
+def scanner_billet():
+    return render_template('scanner-billet.html', spectacles=selectionner_spectacles())
+
+
 @app.get('/item-panier')
 def req_item_panier():
     tbid = request.args.get('tbid')
     sid = request.args.get('sid')
+    if sid:
+        res = selectionner_item_panier(tbid, sid)
+    else:
+        res = select_type_billet_par_id(tbid)
     reponse = {
         "status": 200,
-        "body": selectionner_item_panier(tbid, sid)
+        "body": res
     }
     return jsonify(reponse)
 
@@ -65,23 +82,31 @@ def injecter_menu():
 # NOT TODO ajouter routes pour faire gestion des spectacles (ajouter description, associer les artistes aux scène(procedure faite))
 
 
-@app.post('/commande')
+@app.post('/commander')
 def creer_commande():
-    return
-    # TODO compléter fonction pour faire un commander. Ajouter commande à BD, créer billet et créer accès billet (6)
-    # ()
+    # try:
+    json_data = request.data.decode('utf-8')
+    id_commande = commander_billets(json_data, session['user_id'])
+    reponse = {
+        "status": 200,
+        "body": id_commande
+    }
+    return jsonify(reponse)
 
-    # data = request.json
-    # print(request)
-    # reponse = make_response()
-    #
-    # if verifier_paiement():
-    #     reponse.status_code = 200
-    #     return commander_billet()
-    # else:
-    #     reponse.status = 400
-    #     reponse.message = 'Le paiement est invalide!'
-    #     return jsonify(reponse)
+
+@app.post('/valider-billet')
+def valider_billet():
+    resultat = verifier_acces(request.form.get('id_billet'), request.form.get('spectacle'))
+    reponse = {
+        "status": 200,
+        "body": resultat
+    }
+    return jsonify(reponse)
+
+
+# except Exception as e:
+#     print(e)
+#     return 'Une erreur s\'est produit veuillez réessayer plus tard.', 400
 
 
 @app.route('/creation_compte', methods=['GET', 'POST'])
@@ -105,6 +130,7 @@ def inscription():
     if request.method == 'GET':
         return render_template('creation-compte.html')
 
+
 @app.route('/connexion', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -115,8 +141,14 @@ def login():
         try:
             if check_user_password(email, password):
                 # Authentication successful
+                user = get_user(email)
+                print(user)
                 session['logged_in'] = True
                 session['email'] = email
+                session['user_id'] = user['uid']
+                session['nom'] = user['nom']
+                session['is_admin'] = True if user['est_admin'] == 1 else False
+                print(session['is_admin'])
                 return redirect('/')
             else:
                 # Authentication failed

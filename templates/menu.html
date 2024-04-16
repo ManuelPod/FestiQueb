@@ -54,13 +54,20 @@
 </head>
 <body>
 <div class="menu-container">
-    <a href="/">FesiQueb</a>
-    <h3>Manuel Podeur</h3>
+    <a href="/">FestiQueb</a>
+    <h3>{{session.nom}}</h3>
     <div class="cart-button">
+        {% if session.is_admin %}
+        <button onclick="location.href='/scanner-billet'">Scanner</button>
+        {% endif %}
+
+        {% if not session.user_id %}
         <button onclick="location.href = '/creation_compte'" type="button">Créer un compte</button>
         <button onclick="location.href = '/connexion'" type="button">Se connecter</button>
+        {% else %}
         <span class="pastille-panier" id="pastille-panier">0</span>
         <img class="icon" onclick="location.href='/panier'" src="../static/images/cart.png" alt="">
+        {% endif%}
 
     </div>
 </div>

@@ -21,6 +21,7 @@
         <label for="quantite">Quantité: </label>
         <input id="quantite" type="number" name="quantite-billet" value="1">
     </li>
+    {% if not type_billet.sans_limite %}
     <li>
         <label for="spectacle">Spectacle: </label>
         <select name="spectacle" id="spectacle">
@@ -29,6 +30,7 @@
             {% endfor %}
         </select>
     </li>
+    {% endif %}
 </ul>
 <button onclick="ajouterAuPanier('{{ type_billet.tbid }}')" type="button">Ajouter au panier</button>
 
